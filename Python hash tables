@@ -1,0 +1,1 @@
+hash_table = lambda key: sum(ord(c) for c in key) % 10

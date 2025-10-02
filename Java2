@@ -1,0 +1,8 @@
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        HashMap<String, Integer> m = new HashMap<>();
+        m.put("x", 10);
+        System.out.println(m.get("x"));
+    }
+}

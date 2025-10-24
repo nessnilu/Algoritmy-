@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+
+// Функция для разделения массива
+int partition(std::vector<int>& arr, int low, int high) {
+    int pivot = arr[high];  // Опорный элемент (последний)
+    int i = low - 1;        // Индекс меньшего элемента
+    
+    for (int j = low; j < high; j++) {
+        // Если текущий элемент меньше или равен опорному
+        if (arr[j] <= pivot) {
+            i++;
+            std::swap(arr[i], arr[j]);
+        }
+    }
+    std::swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+// Основная функция быстрой сортировки
+void quickSort(std::vector<int>& arr, int low, int high) {
+    if (low < high) {
+        // pi - индекс разделения, arr[pi] на своем месте
+        int pi = partition(arr, low, high);
+        
+        // Рекурсивно сортируем элементы до и после разделения
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+// Обертка для удобства вызова
+void quickSort(std::vector<int>& arr) {
+    quickSort(arr, 0, arr.size() - 1);
+}
+
+int main() {
+    std::vector<int> arr = {10, 7, 8, 9, 1, 5, 3, 2, 4, 6};
+    
+    std::cout << "Исходный массив: ";
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    quickSort(arr);
+    
+    std::cout << "Отсортированный массив: ";
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}

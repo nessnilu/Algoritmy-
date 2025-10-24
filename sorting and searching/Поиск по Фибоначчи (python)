@@ -1,0 +1,53 @@
+def fibonacci_search(arr, target):
+    n = len(arr)
+    
+    # Генерируем числа Фибоначчи до числа >= n
+    fib_m2 = 0  # F(m-2)
+    fib_m1 = 1  # F(m-1)
+    fib_m = fib_m2 + fib_m1  # F(m)
+    
+    while fib_m < n:
+        fib_m2 = fib_m1
+        fib_m1 = fib_m
+        fib_m = fib_m2 + fib_m1
+    
+    # Инициализация переменных
+    offset = -1
+    
+    while fib_m > 1:
+        # Проверяем valid индекс
+        i = min(offset + fib_m2, n - 1)
+        
+        if arr[i] < target:
+            # Сдвигаемся к большим значениям
+            fib_m = fib_m1
+            fib_m1 = fib_m2
+            fib_m2 = fib_m - fib_m1
+            offset = i
+        elif arr[i] > target:
+            # Сдвигаемся к меньшим значениям
+            fib_m = fib_m2
+            fib_m1 = fib_m1 - fib_m2
+            fib_m2 = fib_m - fib_m1
+        else:
+            return i  # Элемент найден
+    
+    # Проверяем последний элемент
+    if fib_m1 and offset + 1 < n and arr[offset + 1] == target:
+        return offset + 1
+    
+    return -1  # Элемент не найден
+
+if __name__ == "__main__":
+    # Массив должен быть отсортирован для поиска Фибоначчи
+    arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100]
+    target = 85
+    
+    print("Отсортированный массив:", arr)
+    
+    result = fibonacci_search(arr, target)
+    
+    if result != -1:
+        print(f"Элемент {target} найден по индексу: {result}")
+    else:
+        print(f"Элемент {target} не найден в массиве")

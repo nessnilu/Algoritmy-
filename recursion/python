@@ -1,9 +1,9 @@
 def power(x, n):
-    if n == 0:  # Базовый случай
+    if n == 0:  
         return 1
-    if n < 0:  # Обработка отрицательной степени
+    if n < 0:  
         return 1 / power(x, -n)
-    return x * power(x, n - 1)  # Рекурсивный случай
+    return x * power(x, n - 1)  
 print(power(2, 3))   
 print(power(5, 0))    
 print(power(2, -2))  

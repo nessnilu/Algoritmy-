@@ -9,11 +9,21 @@ def greedy_schedule(jobs, n_machines):
     
     return schedule, max(load)
 
-jobs = [5, 7, 3, 8, 2, 6, 4, 9, 1, 5]
-n_machines = 3
+print("Количество машин = ")
+n_machines = int(input())
+
+print("Количество работ = ")
+n_jobs = int(input())
+
+jobs = []
+print("Длительности работ = ")
+for i in range(n_jobs):
+    job = int(input())
+    jobs.append(job)
+
 schedule, makespan = greedy_schedule(jobs, n_machines)
-print("Распределение работ:", schedule)
-print("Максимальное время завершения:", makespan)
+print("Распределение работ =", schedule)
+print("Максимальное время завершения =", makespan)
 
 #ввод: 
 #количество машин = 

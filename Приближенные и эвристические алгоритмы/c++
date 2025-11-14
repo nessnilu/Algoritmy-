@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+pair<vector<vector<int>>, int> greedySchedule(vector<int> jobs, int n_machines) {
+    vector<int> load(n_machines, 0);
+    vector<vector<int>> schedule(n_machines);
+    
+    for (int job : jobs) {
+        int min_load_index = min_element(load.begin(), load.end()) - load.begin();
+        schedule[min_load_index].push_back(job);
+        load[min_load_index] += job;
+    }
+    
+    int max_load = *max_element(load.begin(), load.end());
+    return make_pair(schedule, max_load);
+}
+
+int main() {
+    int n_machines, n_jobs;
+    
+    cout << "Введите количество машин:" << endl;
+    cin >> n_machines;
+    
+    cout << "Введите количество работ:" << endl;
+    cin >> n_jobs;
+    
+    vector<int> jobs(n_jobs);
+    cout << "Введите длительности работ:" << endl;
+    for (int i = 0; i < n_jobs; i++) {
+        cin >> jobs[i];
+    }
+    
+    auto result = greedySchedule(jobs, n_machines);
+    
+    cout << "Распределение работ: ";
+    for (int i = 0; i < result.first.size(); i++) {
+        cout << "[";
+        for (int j = 0; j < result.first[i].size(); j++) {
+            cout << result.first[i][j];
+            if (j < result.first[i].size() - 1) cout << ", ";
+        }
+        cout << "]";
+        if (i < result.first.size() - 1) cout << ", ";
+    }
+    cout << endl;
+    
+    cout << "Максимальное время завершения: " << result.second << endl;
+    return 0;
+}
+
+#ввод: Введите количество машин:
+#7
+#Введите количество работ:
+#8
+#Введите длительности работ:
+#3
+#7
+#3
+#5
+#7
+#9
+#8
+#1
+#вывод: Распределение работ: [3, 1], [7], [3], [5], [7], [9], [8]
+#Максимальное время завершения: 9

@@ -1,0 +1,30 @@
+def greedy_schedule(jobs, n_machines):
+    load = [0] * n_machines
+    schedule = [[] for _ in range(n_machines)]
+    
+    for job in jobs:
+        min_load_index = load.index(min(load))
+        schedule[min_load_index].append(job)
+        load[min_load_index] += job
+    
+    return schedule, max(load)
+
+jobs = [5, 7, 3, 8, 2, 6, 4, 9, 1, 5]
+n_machines = 3
+schedule, makespan = greedy_schedule(jobs, n_machines)
+print("Распределение работ:", schedule)
+print("Максимальное время завершения:", makespan)
+
+#ввод: 
+#количество машин = 
+#3
+#Количество работ = 
+#5
+#Длительности работ = 
+#10 
+#5
+#8
+#3
+#6
+#вывод: Распределение работ = [[10], [5, 3, 6], [8]]
+#Максимальное время завершения = 14

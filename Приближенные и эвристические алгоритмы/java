@@ -1,0 +1,66 @@
+import java.util.*;
+
+public class Scheduling {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Введите количество машин:");
+        int n_machines = scanner.nextInt();
+        
+        System.out.println("Введите количество работ:");
+        int n_jobs = scanner.nextInt();
+        
+        int[] jobs = new int[n_jobs];
+        System.out.println("Введите длительности работ:");
+        for (int i = 0; i < n_jobs; i++) {
+            jobs[i] = scanner.nextInt();
+        }
+        
+        Object[] result = greedySchedule(jobs, n_machines);
+        System.out.println("Распределение работ: " + Arrays.deepToString((ArrayList<Integer>[])result[0]));
+        System.out.println("Максимальное время завершения: " + result[1]);
+        
+        scanner.close();
+    }
+    
+    public static Object[] greedySchedule(int[] jobs, int n_machines) {
+        int[] load = new int[n_machines];
+        ArrayList<Integer>[] schedule = new ArrayList[n_machines];
+        
+        for (int i = 0; i < n_machines; i++) {
+            schedule[i] = new ArrayList<>();
+        }
+        
+        for (int job : jobs) {
+            int minLoadIndex = 0;
+            for (int i = 1; i < n_machines; i++) {
+                if (load[i] < load[minLoadIndex]) {
+                    minLoadIndex = i;
+                }
+            }
+            schedule[minLoadIndex].add(job);
+            load[minLoadIndex] += job;
+        }
+        
+        int maxLoad = 0;
+        for (int l : load) {
+            if (l > maxLoad) maxLoad = l;
+        }
+        
+        return new Object[]{schedule, maxLoad};
+    }
+}
+
+
+#ввод: Введите количество машин:
+#3
+#Введите количество работ:
+#5
+#Введите длительности работ:
+#10
+#6
+#3
+#5
+#4
+#вывод: Распределение работ: [[10], [6, 4], [3, 5]]
+#Максимальное время завершения: 10
